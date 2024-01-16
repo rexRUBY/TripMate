@@ -1,0 +1,348 @@
+<!-- 프론트 레이아웃 회의 이후 추가 및 수정 예정 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Trip Mate - Plan</title>
+
+	<!-- Meta Tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Webestica.com">
+	<meta name="description" content="Trip Mate - Plan">
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDY3pMjMjLZQ9RoG5zd7epznNY16wrZcR0&libraries=places&callback=initAutocomplete" async defer></script>
+
+	<script>
+		let autocomplete;
+		function initAutocomplete(){
+		autocomplete = new google.maps.places.Autocomplete(document.getElementById('destination'));
+		autocomplete.addListener('place_changed',function(){
+			var place = autocomplete.getPlace();
+			if(!place.geometry){
+				$(document).keypress(function (e){
+					if(!e.which==13){
+						alert("No tetails available for input: '"+place.name+"'");
+						return;
+					}
+				});
+			}
+		})
+		//리턴값으로 위도 경도 받으려면 여기서 place.geometry.location
+		}
+		/* Destination */
+		function locaPrint(num){
+			var idNum = "card" + num;
+			document.getElementById('destination').value = document.getElementById(idNum).textContent;
+		}
+		
+		/* Dark mode */
+		const storedTheme = localStorage.getItem('theme')
+ 
+		const getPreferredTheme = () => {
+			if (storedTheme) {
+				return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+		}
+
+		const setTheme = function (theme) {
+			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+			}
+		}
+
+		setTheme(getPreferredTheme())
+
+		window.addEventListener('DOMContentLoaded', () => {
+		    var el = document.querySelector('.theme-icon-active');
+			if(el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+					element.classList.remove('active')
+				})
+
+				btnToActive.classList.add('active')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+			}
+
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+				if (storedTheme !== 'light' || storedTheme !== 'dark') {
+					setTheme(getPreferredTheme())
+				}
+			})
+
+			showActiveTheme(getPreferredTheme())
+
+			document.querySelectorAll('[data-bs-theme-value]')
+				.forEach(toggle => {
+					toggle.addEventListener('click', () => {
+						const theme = toggle.getAttribute('data-bs-theme-value')
+						localStorage.setItem('theme', theme)
+						setTheme(theme)
+						showActiveTheme(theme)
+					})
+				})
+
+			}
+		})
+	</script>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="assets/images/favicon.ico">
+
+	<!-- Google Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+	<!-- Plugins CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/tiny-slider/tiny-slider.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/glightbox/css/glightbox.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/choices/css/choices.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/flatpickr/css/flatpickr.min.css">
+
+	<!-- Theme CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+
+</head>
+
+<body>
+
+<!-- Header START -->
+<header class="navbar-light header-sticky">
+	<!-- Logo Nav START -->
+	<nav class="navbar navbar-expand-xl">
+		<div class="container">
+			<!-- Logo START -->
+			<a class="navbar-brand" href="index.html">
+				<img class="light-mode-item navbar-brand-item" src="assets/images/logo.png" alt="logo">
+				<img class="dark-mode-item navbar-brand-item" src="assets/images/logo2.png" alt="logo">
+			</a>
+			<!-- Logo END -->
+		</div>
+	</nav>
+	<!-- Logo Nav END -->
+</header>
+<!-- Header END -->
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+	
+<!-- =======================
+Main Banner START -->
+<section class="pt-0">
+	<div class="container position-relative">
+		<!-- Bg image -->
+		<div class="rounded-3 p-4 p-sm-5" style="background-image: url(); background-position: center center; background-repeat: no-repeat; background-size: cover;">
+			<!-- 배경 이미지 미정 -->
+			<!-- Banner title -->
+			<div class="row justify-content-between pt-0 pb-5"> 
+				<div class="col-md-7 col-lg-8 col-xxl-7 pb-5 mb-0 mb-lg-5"> 
+					<h1 class="text-white">Life Is Adventure Make The Best Of It</h1>
+					<p class="text-white mb-0">Planning for a trip? we will organize your best trip with the best destination and within the best budgets!</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Search START -->
+		<div class="row mt-n7">
+			<div class="col-11 mx-auto">				
+				<!-- Booking from START -->
+				<form class="bg-mode shadow rounded-3 p-4">
+					<div class="row g-4 align-items-center">
+						<div class="col-xl-10">
+							<div class="row g-4">
+								<!-- Location -->
+								<div class="col-md-6 col-lg-4">
+									<label class="h6 fw-normal mb-0"><i class="bi bi-geo-alt text-primary me-1"></i>목적지</label>
+									<!-- Input field -->
+									<div class="form-border-bottom form-control-transparent form-fs-lg mt-2">
+										<input type="text" class="form-control py-2" id="destination" placeholder="Location">
+									</div>
+								</div>
+
+								<!-- Period -->
+								<div class="col-md-6 col-lg-4">
+									<label class="h6 fw-normal mb-0"><i class="bi bi-calendar text-primary me-1"></i>일정</label>
+									<!-- Input field -->
+									<div class="form-border-bottom form-control-transparent form-fs-lg mt-2">
+										<input type="text" class="form-control flatpickr py-2" data-date-format="d M Y" placeholder="Choose a date">
+									</div>
+								</div>
+
+								<!-- Person -->
+								<div class="col-md-6 col-lg-4">
+									<label class="h6 fw-normal mb-0"><i class="fa-solid fa-person-skating text-primary me-1"></i>인원</label>
+									<!-- Input field -->
+									<div class="form-border-bottom form-control-transparent form-fs-lg mt-2">
+										<input type="text" class="form-control py-2" placeholder="Person">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Button -->
+						<div class="col-xl-2">
+							<div class="d-grid">
+								<a href="#" class="btn btn-lg btn-dark mb-0">Make a Plan</a>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- Booking from END -->
+			</div>
+		</div>
+		<!-- Search END -->
+	</div>
+</section>
+<!-- =======================
+Main Banner END -->
+
+<!-- =======================
+Packages START -->
+<section class="pt-0 pt-md-5">
+	<div class="container">
+		<!-- Title -->
+		<div class="row mb-4">
+			<div class="col-12 text-center">
+				<h2 class="mb-0">추천 여행지</h2>
+			</div>
+		</div>
+
+		<div class="row g-4">
+			<!-- Package item -->
+			<div class="col-sm-6 col-xl-3">
+				<!-- Card START -->
+				<div class="card card-img-scale overflow-hidden bg-transparent">
+					<div class="card-img-scale-wrapper rounded-3">
+						<!-- Card Image -->
+						<img src="assets/images/04.jpg" class="card-img" alt="">
+						<!-- prototype용 이미지, 이후 수집한 이미지로 변경 예정 -->
+					</div> 
+					
+					<!-- Card body -->
+					<div class="card-body px-2">
+						<!-- Title -->
+						<h5 class="card-title"><a href="#" class="stretched-link" id="card1" onClick="locaPrint(1)">prototype, test</a></h5>
+						<!-- prototype용 이름, 이후 수집한 이미지에 맞춰 이름 변경 예정 -->
+					</div>
+				</div>
+				<!-- Card END -->
+			</div>
+			<!-- Package item -->
+			<div class="col-sm-6 col-xl-3">
+				<!-- Card START -->
+				<div class="card card-img-scale overflow-hidden bg-transparent">
+					<div class="card-img-scale-wrapper rounded-3">
+						<!-- Card Image -->
+						<img src="assets/images/04.jpg" class="card-img" alt="">
+						<!-- prototype용 이미지, 이후 수집한 이미지로 변경 예정 -->
+					</div> 
+					
+					<!-- Card body -->
+					<div class="card-body px-2">
+						<!-- Title -->
+						<h5 class="card-title"><a href="#" class="stretched-link" id="card2" onClick="locaPrint(2)">Destination, Test</a></h5>
+						<!-- prototype용 이름, 이후 수집한 이미지에 맞춰 이름 변경 예정 -->
+					</div>
+				</div>
+				<!-- Card END -->
+			</div>
+		</div> <!-- Row END -->
+	</div>
+</section>
+<!-- =======================
+Packages END -->
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+<!-- =======================
+Footer START -->
+<footer>
+	<div class="container">
+		<div class="bg-light rounded-top p-4 pb-0">
+			<div class="row g-4 justify-content-between">
+
+				<!-- Widget 1 START -->
+				<div class="col-md-5 col-lg-4">
+					<!-- logo -->
+					<a class="me-0" href="index.html">
+						<img class="light-mode-item h-40px" src="assets/images/logo.png" alt="logo">
+            			<img class="dark-mode-item h-40px" src="assets/images/logo2.png" alt="logo">
+					</a>
+				</div>
+				<!-- Widget 1 END -->
+
+				<!-- Widget 2 START -->
+				<div class="col-md-7 col-lg-4">
+					<div class="row g-4 g-lg-5">
+						<!-- Link block -->
+						<div class="col-6">
+							<h5 class="text-white mb-2 mb-md-4">Developers</h5>
+							<ul class="nav flex-column text-primary-hover">
+								<li class="nav-item"><a class="nav-link text-muted" href="https://github.com/ssongK?">KCS</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="https://github.com/rexRUBY">PYS</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="https://github.com/rimeti">YSH</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="https://github.com/kkug-i">LJK</a></li>
+							</ul>
+						</div>
+
+						<!-- Link block -->
+						<div class="col-6">
+							<h5 class="text-white mb-2 mb-md-4">Link</h5>
+							<ul class="nav flex-column text-primary-hover">
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Sign up</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Sign in</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Privacy Policy</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Terms</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Cookie</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Support</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- Widget 2 END -->
+			</div>
+
+			<!-- Divider -->
+			<hr class="mt-4 mb-0">
+
+			<!-- Bottom footer -->
+			<div class="container py-3 px-0">
+				<div class="d-md-flex justify-content-between align-items-center text-center text-md-left">
+					<!-- copyright text -->
+					<div class="text-muted text-primary-hover"> Copyrights ©2023 MJC Isass <a href="https://github.com/ssongK/TripMate" class="text-muted">Phoneix Team</a>. </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- =======================
+Footer END -->
+
+<!-- Back to top -->
+<div class="back-top"></div>
+
+<!-- Bootstrap JS -->
+<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Vendors -->
+<script src="assets/vendor/tiny-slider/tiny-slider.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.js"></script>
+<script src="assets/vendor/choices/js/choices.min.js"></script>
+<script src="assets/vendor/flatpickr/js/flatpickr.min.js"></script>
+
+<!-- ThemeFunctions -->
+<script src="assets/js/functions.js"></script>
+
+</body>
+</html>

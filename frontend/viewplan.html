@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>Trip Mate - View Plan</title>
+
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Webestica.com">
+    <meta name="description" content="Booking - Multipurpose Online Booking Theme">
+
+    <script>
+        /* Dark mode */
+        const storedTheme = localStorage.getItem('theme')
+
+        const getPreferredTheme = () => {
+            if (storedTheme) {
+                return storedTheme
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+
+        const setTheme = function (theme) {
+            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-bs-theme', 'dark')
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme)
+            }
+        }
+
+        setTheme(getPreferredTheme())
+
+        window.addEventListener('DOMContentLoaded', () => {
+            var el = document.querySelector('.theme-icon-active');
+            if (el != 'undefined' && el != null) {
+                const showActiveTheme = theme => {
+                    const activeThemeIcon = document.querySelector('.theme-icon-active use')
+                    const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+                    const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+                    document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+                        element.classList.remove('active')
+                    })
+
+                    btnToActive.classList.add('active')
+                    activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+                }
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                    if (storedTheme !== 'light' || storedTheme !== 'dark') {
+                        setTheme(getPreferredTheme())
+                    }
+                })
+
+                showActiveTheme(getPreferredTheme())
+
+                document.querySelectorAll('[data-bs-theme-value]')
+                    .forEach(toggle => {
+                        toggle.addEventListener('click', () => {
+                            const theme = toggle.getAttribute('data-bs-theme-value')
+                            localStorage.setItem('theme', theme)
+                            setTheme(theme)
+                            showActiveTheme(theme)
+                        })
+                    })
+
+            }
+        })
+    </script>
+
+
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/choices/css/choices.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/flatpickr/css/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/stepper/css/bs-stepper.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/quill/css/quill.snow.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/dropzone/css/dropzone.css">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+    <!-- Custom CSS -->
+    <link href="assets/css/tripMate.css" rel="stylesheet" media="screen">
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- CardStyle -->
+    <style>
+        .collapse-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsed .collapse-panel {
+            max-height: 1000px;
+        }
+
+        .card-body {
+            background-color: transparent;
+        }
+
+        .collapsed .card-body {
+            transition: background-color 0.3s ease;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header START -->
+	<header class="navbar-light header-sticky">
+		<!-- Logo Nav START -->
+		<nav class="navbar navbar-expand-xl">
+			<div class="container" style="position: relative;">
+				<!-- Logo -->
+				<a class="navbar-brand" href="index.html">
+					<img class="light-mode-item navbar-brand-item" src="assets/images/logo.png" alt="logo">
+					<img class="dark-mode-item navbar-brand-item" src="assets/images/logo2.png" alt="logo">
+				</a>
+
+				<!-- Responsive navbar toggler -->
+				<button class="navbar-toggler ms-auto ms-sm-0 p-0 p-sm-2" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-animation">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span>
+					<span class="d-none d-sm-inline-block small">Menu</span>
+				</button>
+
+				<!-- Main navbar START -->
+				<div class="navbar-collapse collapse" id="navbarCollapse" style="position: absolute; right: 100px;">
+					<ul class="navbar-nav navbar-nav-scroll me-auto">
+						<!-- Nav item Listing -->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="listingMenu" data-bs-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false">Travel</a>
+							<!-- Submenu -->
+							<ul class="dropdown-menu" aria-labelledby="listingMenu">
+								<li><a class="dropdown-item" href="https://www.agoda.com/flights">항공편 예약</a></li>
+								<li><a class="dropdown-item" href="https://www.agoda.com">숙소 예약</a></li>
+							</ul>
+						</li>
+
+						<!-- Nav item Pages -->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false">Info</a>
+							<ul class="dropdown-menu" aria-labelledby="pagesMenu">
+								<li> <a class="dropdown-item" href="#">개인 정보 정책</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li> <a class="dropdown-item" href="about.html">개발자 정보</a></li>
+								<li> <a class="dropdown-item" href="contact.html">오류 제보</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!-- Main navbar END -->
+
+				<!-- Profile and Notification START -->
+				<ul class="nav flex-row align-items-center list-unstyled ms-xl-auto">
+					<!-- Profile dropdown START -->
+					<li class="nav-item ms-3 dropdown">
+						<!-- Avatar -->
+						<a class="nav-link p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside"
+							data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+							Accounts
+						</a>
+
+						<ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
+							aria-labelledby="profileDropdown">
+							<!-- Links -->
+							<li><a class="dropdown-item" href="starting.html">여행 일정 조회</a></li>
+							<li><a class="dropdown-item" href="#">맞춤 정보</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item" href="#">
+									<i class="bi bi-bookmark-check fa-fw me-2"></i>Bookmark</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">
+									<i class="bi bi-gear fa-fw me-2"></i>Settings</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">
+									<i class="bi bi-info-circle fa-fw me-2"></i>Help Center</a>
+							</li>
+							<li>
+								<a class="dropdown-item bg-danger-soft-hover" href="#">
+									<i class="bi bi-power fa-fw me-2"></i>Sign Out</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+
+							<!-- Dark mode options START -->
+							<li>
+								<div
+									class="nav-pills-primary-soft theme-icon-active d-flex justify-content-between align-items-center p-2 pb-0">
+									<span>Mode:</span>
+									<button type="button" class="btn btn-link nav-link text-primary-hover mb-0 p-0"
+										data-bs-theme-value="light" data-bs-toggle="tooltip" data-bs-placement="top"
+										data-bs-title="Light">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-sun fa-fw mode-switch" viewBox="0 0 16 16">
+											<path
+												d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+											<use href="#"></use>
+										</svg>
+									</button>
+									<button type="button" class="btn btn-link nav-link text-primary-hover mb-0 p-0"
+										data-bs-theme-value="dark" data-bs-toggle="tooltip" data-bs-placement="top"
+										data-bs-title="Dark">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-moon-stars fa-fw mode-switch"
+											viewBox="0 0 16 16">
+											<path
+												d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z" />
+											<path
+												d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+											<use href="#"></use>
+										</svg>
+									</button>
+									<button type="button"
+										class="btn btn-link nav-link text-primary-hover mb-0 p-0 active"
+										data-bs-theme-value="auto" data-bs-toggle="tooltip" data-bs-placement="top"
+										data-bs-title="Auto">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-circle-half fa-fw mode-switch"
+											viewBox="0 0 16 16">
+											<path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+											<use href="#"></use>
+										</svg>
+									</button>
+								</div>
+							</li>
+							<!-- Dark mode options END-->
+						</ul>
+					</li>
+					<!-- Profile dropdown END -->
+				</ul>
+				<!-- Profile and Notification END -->
+			</div>
+		</nav>
+		<!-- Logo Nav END -->
+	</header>
+	<!-- Header END -->
+
+    <!-- **************** MAIN CONTENT START **************** -->
+    <main>
+        <!-- ======================= Page Banner START -->
+        <section class="pb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1 class="fs-2 mb-2">계획을 확인해보세요!</h1>
+                        <p class="mb-0">여행을 떠나기 전, 다시 한 번 일정을 확인해보세요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ======================= Page Banner END -->
+
+        <!-- ======================= Main View START -->
+        <section>
+            <div class="container">
+                <!-- View Plan START -->
+                <div>
+                    <div class="vstack gap-4">
+                        <!-- Plan name -->
+                        <h4 class="mb-0">Lorem Ipsum</h4>
+
+                        <!-- Check Basic Info START -->
+                        <div class="card shadow">
+                            <!-- Card header -->
+                            <div class="card-header border-bottom">
+                                <h5 class="mb-0">기본 정보</h5>
+                            </div>
+
+                            <!-- Card body START -->
+                            <div class="card-body">
+                                <div class="row g-4">
+                                    <!-- Location -->
+                                    <div class="col-lg-4">
+                                        <div
+                                            class="form-control-border form-control-transparent form-fs-md d-flex">
+                                            <div class="w-100">
+                                                <label class="form-label">Location</label>
+                                                <div class="dropdown guest-selector me-2">
+                                                    <input type="text" placeholder="Location"
+                                                        id="Location"
+                                                        class="form-guest-selector form-control"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Date -->
+                                    <div class="col-lg-4">
+                                        <div class="d-flex">
+                                            <div
+                                                class="form-control-border form-control-transparent form-fs-md">
+                                                <label class="form-label">Date</label>
+                                                <input type="text" placeholder="Date" id="Date"
+                                                    class="form-guest-selector form-control"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Travelers -->
+                                    <div class="col-lg-4">
+                                        <div
+                                            class="form-control-border form-control-transparent form-fs-md d-flex">
+                                            <div class="w-100">
+                                                <label class="form-label">Travelers</label>
+                                                <div class="dropdown guest-selector me-2">
+                                                    <input type="text" placeholder="Personnel"
+                                                        id="Travelers"
+                                                        class="form-guest-selector form-control"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card body END -->
+                        </div>
+                        <!-- Check Basic Info END -->
+
+                        <!-- Main View Start -->
+                        <div class="row">
+                            <div class="col-8">
+                                <!-- Connect the API , This is example view-->
+                                <iframe class="w-100 h-500px grayscale rounded"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076684379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sin!4v1586000412513!5m2!1sen!2sin"
+                                    height="575" style="border:0;" aria-hidden="false" tabindex="0">
+                                </iframe>
+                            </div>
+
+                            <!-- Side Tab View START -->
+                            <div class="col-4">
+                                <div>
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab"
+                                                href="#schedule_view" id="schedule_tab">Schedule</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#direction_view"
+                                                id="direction_tab">Directions Service</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Tab View -->
+                                <div id="main-view" class="tab-content" 
+                                style="padding:20px; height: 500px; overflow: auto;">
+                                    <!-- Schedule Tab -->
+                                    <div class="tab-pane fade show active" id="schedule_view">
+                                        <div class="card shadow">
+                                            <!-- Card body START -->
+                                            <div class="card-body">
+                                                <div>
+                                                    <h5 class="card-title mb-1">Place Name</h5>
+                                                    <h6>Time Info (Start Time - End Time)</h6>
+                                                    <span>Lorem ipsum dolor sit amet</span>
+                                                </div>
+                                            </div>
+                                            <!-- Card body END -->
+                                            <div class="card-body">
+                                                <div>
+                                                    <h5 class="card-title mb-1">Place Name</h5>
+                                                    <h6>Time Info (Start Time - End Time)</h6>
+                                                    <span>Lorem ipsum dolor sit amet</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Direction Tab -->
+                                    <div id="direction_view" class="tab-pane fade">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <button
+                                                class="btn btn-dark rounded mb-0 bi bi-car-front-fill"
+                                                style="margin-right: 10px; padding: 5px;"
+                                                onclick="directionService('driving')">Driving</button>
+                                            <button class="btn btn-dark rounded mb-0 bi bi-bicycle"
+                                                style="margin-right: 10px; padding: 5px;"
+                                                onclick="directionService('bicycling')">Bicycling</button>
+                                            <button class="btn btn-dark rounded mb-0 bi bi-bus-front"
+                                                style="margin-right: 10px; padding: 5px;"
+                                                onclick="directionService('transit')">Transit</button>
+                                            <button
+                                                class="btn btn-dark rounded mb-0 bi bi-universal-access"
+                                                style="padding: 5px;"
+                                                onclick="directionService('walking')">Walking</button>
+                                        </div>
+
+                                        <!-- Direction Panel Start-->
+                                        <div id="direction_card" style="margin-top: 20px;">
+                                            <!-- Card START -->
+                                            <ul id="sortable" class="tab-pane fade show active">
+                                                <li>
+                                                    <div class="card shadow">
+                                                        <!-- Card  Header START -->
+                                                        <div class="card" id="dsPanel">
+                                                            <div class="card-header border-bottom">
+                                                                <div style="display: inline-block;">
+                                                                    <h5 class="mb-0 panel-title">
+                                                                        <a id="dsA" class="capitalize"
+                                                                            role="button"
+                                                                            data-toggle="collapse"
+                                                                            data-parent="#accordion"
+                                                                            href="#dsCollapse"
+                                                                            aria-expanded="true"
+                                                                            aria-controls="collapseOne">#</a>
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Card body START -->
+                                                            <div class="card-body">
+                                                                <div class="row g-4">
+                                                                    <div id="dsPanel" role="tabpanel"
+                                                                        aria-labelledby="heading1"
+                                                                        class="panel-collapse show"
+                                                                        style="background-color:rgba(0, 0, 0, 0);">
+                                                                        <div id="dsPanelBody"
+                                                                            class="panel-body">
+                                                                            <!-- content -->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Main View End -->
+
+                        <!-- Step 3 button -->
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-secondary prev-btn mb-0">Plan List</button>
+                            <a href="#" class="btn btn-success mb-0">Edit Plan</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- View Plan END -->
+            </div>
+        </section>
+        <!-- ======================= Main View END -->
+    </main>
+    <!-- **************** MAIN CONTENT END **************** -->
+
+    <!-- ======================= Footer START -->
+    <footer class="bg-dark p-3">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Logo Widget -->
+                <div class="col-md-4">
+                    <div class="text-center text-md-start mb-3 mb-md-0">
+                        <a href="index.html"> <img class="h-30px" src="assets/images/logo2.png" alt="logo"> </a>
+                    </div>
+                </div>
+                <!-- Copyright -->
+                <div class="col-md-4">
+                    <div class="text-muted text-primary-hover">Copyrights ©2023 MJC Isass
+                        <a href="https://github.com/ssongK/TripMate" class="text-muted">Phoneix Team</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ======================= Footer END -->
+
+    <!-- Back to top -->
+    <div class="back-top"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Vendors -->
+    <script src="assets/vendor/choices/js/choices.min.js"></script>
+    <script src="assets/vendor/flatpickr/js/flatpickr.min.js"></script>
+    <script src="assets/vendor/stepper/js/bs-stepper.min.js"></script>
+    <script src="assets/vendor/quill/js/quill.min.js"></script>
+    <script src="assets/vendor/dropzone/js/dropzone.js"></script>
+    <script src="assets/vendor/flatpickr/js/flatpickr.min.js"></script>
+
+    <!-- ThemeFunctions -->
+    <script src="assets/js/functions.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.nav-tabs a').click(function () {
+                $(this).tab('show');
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>TripMate - Starting</title>
+
+	<!-- Meta Tags -->
+	<meta charset="utf-8">
+
+	<!-- Dark mode -->
+	<script>
+		const storedTheme = localStorage.getItem('theme')
+
+		const getPreferredTheme = () => {
+			if (storedTheme) {
+				return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+		}
+
+		const setTheme = function (theme) {
+			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+			}
+		}
+
+		setTheme(getPreferredTheme())
+
+		window.addEventListener('DOMContentLoaded', () => {
+			var el = document.querySelector('.theme-icon-active');
+			if (el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+					const activeThemeIcon = document.querySelector('.theme-icon-active use')
+					const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+					const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+					document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+						element.classList.remove('active')
+					})
+
+					btnToActive.classList.add('active')
+					activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+				}
+
+				window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+					if (storedTheme !== 'light' || storedTheme !== 'dark') {
+						setTheme(getPreferredTheme())
+					}
+				})
+
+				showActiveTheme(getPreferredTheme())
+
+				document.querySelectorAll('[data-bs-theme-value]')
+					.forEach(toggle => {
+						toggle.addEventListener('click', () => {
+							const theme = toggle.getAttribute('data-bs-theme-value')
+							localStorage.setItem('theme', theme)
+							setTheme(theme)
+							showActiveTheme(theme)
+						})
+					})
+
+			}
+		})
+
+	</script>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="assets/images/favicon.ico">
+
+	<!-- Google Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+	<!-- Plugins CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/overlay-scrollbar/css/overlayscrollbars.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/choices/css/choices.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/glightbox/css/glightbox.css">
+
+	<!-- Theme CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+	<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+
+<body>
+
+	<!-- **************** MAIN CONTENT START **************** -->
+	<main>
+		<!-- Header START -->
+		<header class="navbar-light header-sticky">
+			<!-- Logo Nav START -->
+			<nav class="navbar navbar-expand-xl">
+				<div class="container" style="position: relative;">
+					<!-- Logo -->
+					<a class="navbar-brand" href="index.html">
+						<img class="light-mode-item navbar-brand-item" src="assets/images/logo.png" alt="logo">
+						<img class="dark-mode-item navbar-brand-item" src="assets/images/logo2.png" alt="logo">
+					</a>
+
+					<!-- Responsive navbar toggler -->
+					<button class="navbar-toggler ms-auto ms-sm-0 p-0 p-sm-2" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-animation">
+							<span></span>
+							<span></span>
+							<span></span>
+						</span>
+						<span class="d-none d-sm-inline-block small">Menu</span>
+					</button>
+
+					<!-- Main navbar START -->
+					<div class="navbar-collapse collapse" id="navbarCollapse" style="position: absolute; right: 100px;">
+						<ul class="navbar-nav navbar-nav-scroll me-auto">
+							<!-- Nav item Listing -->
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="listingMenu" data-bs-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">Travel</a>
+								<!-- Submenu -->
+								<ul class="dropdown-menu" aria-labelledby="listingMenu">
+									<li><a class="dropdown-item" href="https://www.agoda.com/flights">항공편 예약</a></li>
+									<li><a class="dropdown-item" href="https://www.agoda.com">숙소 예약</a></li>
+								</ul>
+							</li>
+
+							<!-- Nav item Pages -->
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">Info</a>
+								<ul class="dropdown-menu" aria-labelledby="pagesMenu">
+									<li><a class="dropdown-item" href="#">개인 정보 정책</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" href="about.html">개발자 정보</a></li>
+									<li><a class="dropdown-item" href="contact.html">오류 제보</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<!-- Main navbar END -->
+
+					<!-- Profile and Notification START -->
+					<ul class="nav flex-row align-items-center list-unstyled ms-xl-auto">
+						<!-- Profile dropdown START -->
+						<li class="nav-item ms-3 dropdown">
+							<!-- Avatar -->
+							<a class="nav-link p-0" href="#" id="profileDropdown" role="button"
+								data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown"
+								aria-expanded="false">
+								Accounts
+							</a>
+
+							<ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
+								aria-labelledby="profileDropdown">
+								<li><a class="dropdown-item" href="starting.html">여행 일정 조회</a></li>
+								<li><a class="dropdown-item" href="#">맞춤 정보</a></li>
+                                				<li><hr class="dropdown-divider"></li>
+								<li>
+									<a class="dropdown-item" href="#">
+                                        				<i class="bi bi-bookmark-check fa-fw me-2"></i>Bookmark</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">
+                                       					 <i class="bi bi-gear fa-fw me-2"></i>Settings</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">
+                                        				<i class="bi bi-info-circle fa-fw me-2"></i>Help Center</a>
+								</li>
+								<li>
+									<a class="dropdown-item bg-danger-soft-hover" href="#">
+										<i class="bi bi-power fa-fw me-2"></i>Sign Out</a>
+								</li>
+								<li><hr class="dropdown-divider"></li>
+
+								<!-- Dark mode options START -->
+								<li>
+									<div
+										class="nav-pills-primary-soft theme-icon-active d-flex justify-content-between align-items-center p-2 pb-0">
+										<span>Mode:</span>
+										<button type="button" class="btn btn-link nav-link text-primary-hover mb-0 p-0"
+											data-bs-theme-value="light" data-bs-toggle="tooltip" data-bs-placement="top"
+											data-bs-title="Light">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-sun fa-fw mode-switch"
+												viewBox="0 0 16 16">
+												<path
+													d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+												<use href="#"></use>
+											</svg>
+										</button>
+										<button type="button" class="btn btn-link nav-link text-primary-hover mb-0 p-0"
+											data-bs-theme-value="dark" data-bs-toggle="tooltip" data-bs-placement="top"
+											data-bs-title="Dark">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-moon-stars fa-fw mode-switch"
+												viewBox="0 0 16 16">
+												<path
+													d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z" />
+												<path
+													d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+												<use href="#"></use>
+											</svg>
+										</button>
+										<button type="button"
+											class="btn btn-link nav-link text-primary-hover mb-0 p-0 active"
+											data-bs-theme-value="auto" data-bs-toggle="tooltip" data-bs-placement="top"
+											data-bs-title="Auto">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-circle-half fa-fw mode-switch"
+												viewBox="0 0 16 16">
+												<path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+												<use href="#"></use>
+											</svg>
+										</button>
+									</div>
+								</li>
+								<!-- Dark mode options END-->
+							</ul>
+						</li>
+						<!-- Profile dropdown END -->
+					</ul>
+					<!-- Profile and Notification END -->
+				</div>
+			</nav>
+			<!-- Logo Nav END -->
+		</header>
+		<!-- Header END -->
+
+		<!-- ======================= Page Banner START -->
+		<section class="pb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h1 class="fs-2 mb-2">이제 여행을 시작하세요!</h1>
+						<p class="mb-0">완성된 계획을 보거나, 수정이 가능합니다. 가계부를 통해 예산을 관리하세요.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- ======================= Page Banner END -->
+
+		<!-- Booking table START -->
+		<div class="card shadow mt-5 container" style="margin-bottom: 60px;">
+			<!-- Card header START -->
+			<div class="card-header border-bottom">
+				<h5 class="card-header-title">예정된 여행</h5>
+			</div>
+			<!-- Card header END -->
+
+			<!-- Card body START -->
+			<div class="card-body" id="card">
+				<!-- Search and select START -->
+				<div class="row g-3 align-items-center justify-content-between mb-3">
+					<!-- Search -->
+					<div class="col-md-8">
+						<form class="rounded position-relative">
+							<input class="form-control pe-5" type="search" placeholder="일정명 검색" aria-label="Search">
+							<button class="btn border-0 px-3 py-0 position-absolute top-50 end-0 translate-middle-y"
+								type="submit"><i class="fas fa-search fs-6"></i></button>
+						</form>
+					</div>
+
+					<!-- Select option 보류 -->
+					<!-- <div class="col-md-3"> -->
+						<!-- Short by filter -->
+						<!-- <form>
+							<select class="form-select js-choice" aria-label=".form-select-sm"
+								onchange="handleSort(this.value)">
+								<option value="">정렬</option>
+								<option value="fastest">일정 빠른순</option>
+								<option value="latest">일정 늦은순</option>
+							</select>
+						</form>
+					</div> -->
+				</div>
+				<!-- Search and select END -->
+
+				<!-- Table head -->
+				<div class="bg-light rounded p-3 d-none d-lg-block">
+		                    <div class="row row-cols-7 g-4">
+		                        <div class="col-2">
+		                            <h6 class="mb-0">Plan Name</h6>
+		                        </div>
+		                        <div class="col-2">
+		                            <h6 class="mb-0">Location</h6>
+		                        </div>
+		                        <div class="col-2">
+		                            <h6 class="mb-0">Date</h6>
+		                        </div>
+		                        <div class="col">
+		                            <h6 class="mb-0">View Plan</h6>
+		                        </div>
+		                        <div class="col">
+		                            <h6 class="mb-0">Plan Edit</h6>
+		                        </div>
+		                        <div class="col">
+		                            <h6 class="mb-0">Account Book</h6>
+		                        </div>
+		                        <div class="col">
+		                            <h6 class="mb-0">Save Image</h6>
+		                        </div>
+		                    </div>
+		                </div>
+
+				<!-- Table data -->
+				<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+					<!-- Data item -->
+					<div class="col-2">
+						<div class="d-flex align-items-center">
+			                            <div>
+			                                <input type="checkbox" class="checkbox form-check-input">
+			                            </div>
+			                            <!-- Plan Name -->
+			                            <div class="ms-2">
+			                                <h6 class="mb-0 fw-light">Plan Name1</h6>
+			                            </div>
+			                        </div>
+					</div>
+					<div class="col-2">
+                        			<!-- Location -->
+						<h6 class="mb-0 fw-normal">London</h6>
+					</div>
+					<div class="col-2">
+                       				<!-- Date Start to End -->
+						<h6 class="mb-0 fw-normal">04 May to 05 May</h6>
+					</div>
+					<div class="col">
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">보기</a></div>
+					</div>
+					<div class="col">
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">편집</a></div>
+					</div>
+					<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">가계부</a></div>
+					<div class="col"><a href="saveImage.html" class="btn btn-sm btn-light mb-0" style="margin-left: 10px;" onclick="saveAsImage()"><i
+								class="bi bi-download"></i></a></div>
+				</div>
+				<!-- Table Data END-->
+
+               			<button class="btn btn-secondary" style="float: left; margin-top: 20px;">My Page</button>
+				<button class="btn btn-primary" style="float: right; margin-top: 20px;" onclick="deletePlan()">삭제</button>
+			</div>
+			<!-- Card body END -->
+		</div>
+		<!-- Booking table END -->
+
+	</main>
+	<!-- **************** MAIN CONTENT END **************** -->
+
+	<!-- ======================= Footer START -->
+	<footer class="bg-dark p-3">
+		<div class="container">
+			<div class="row align-items-center">
+				<!-- Logo Widget -->
+				<div class="col-md-4">
+					<div class="text-center text-md-start mb-3 mb-md-0">
+						<a href="index.html"> <img class="h-30px" src="assets/images/logo2.png" alt="logo"> </a>
+					</div>
+				</div>
+				<!-- Copyright -->
+				<div class="col-md-4">
+					<div class="text-muted text-primary-hover">Copyrights ©2023 MJC Isass
+						<a href="https://github.com/ssongK/TripMate" class="text-muted">Phoneix Team</a>.
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- ======================= Footer END -->
+
+	<!-- Bootstrap JS -->
+	<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Vendor -->
+	<script src="assets/vendor/overlay-scrollbar/js/overlayscrollbars.min.js"></script>
+	<script src="assets/vendor/choices/js/choices.min.js"></script>
+	<script src="assets/vendor/glightbox/js/glightbox.js"></script>
+
+
+	<!-- ThemeFunctions -->
+	<script src="assets/js/functions.js"></script>
+
+
+	<!-- Java Script -->
+	<script>
+		//DB에서 데이터 가져옴
+		function addContent(plan_info_array) {
+			var html = `<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+                            <!-- Data item -->
+                            <div class="col-2">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <input type="checkbox" class="checkbox form-check-input">
+                                    </div>
+                                    <!-- Plan Name -->
+                                    <div class="ms-2">
+                                        <h6 class="mb-0 fw-light">${plan_info_array.plan_name}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <!-- Location -->
+                                <h6 class="mb-0 fw-normal">${plan_info_array.location}</h6>
+                            </div>
+                            <div class="col-2">
+                                <!-- Date Start to End -->
+                                <h6 class="mb-0 fw-normal">${plan_info_array.date}</h6>
+                            </div>
+                            <div class="col">
+                                <div class="col"><a href="#" class="btn btn-sm btn-light mb-0">보기</a></div>
+                            </div>
+                            <div class="col">
+                                <div class="col"><a href="#" class="btn btn-sm btn-light mb-0">편집</a></div>
+                            </div>
+                            <div class="col"><a href="#" class="btn btn-sm btn-light mb-0">가계부</a></div>
+                            <div class="col"><a href="saveImage.html" class="btn btn-sm btn-light mb-0" style="margin-left: 10px;" onclick="saveAsImage()"><i
+                                        class="bi bi-download"></i></a></div>
+                        </div>`;
+
+			$("#card").append(html);
+		}
+
+
+		//일정 정렬
+		function handleSort(value) {
+			if (value === "fastest") {
+				sortTableByDateFastest();
+			} else if (value === "latest") {
+				sortTableByDateLatest();
+			}
+		}
+
+		function sortTableByDateFastest() {
+			const tableData = document.querySelectorAll('.row-cols-xl-7');
+			const dataArray = Array.from(tableData);
+			dataArray.sort(compareDatesFastest);
+			const cardBody = document.getElementById('card');
+			dataArray.forEach(data => cardBody.appendChild(data));
+			console.log(dataArray);
+		}
+
+		function sortTableByDateLatest() {
+			const tableData = document.querySelectorAll('.row-cols-xl-7');
+			const dataArray = Array.from(tableData);
+			dataArray.sort(compareDatesLatest);
+			const cardBody = document.getElementById('card');
+			dataArray.forEach(data => cardBody.appendChild(data));
+			console.log(dataArray);
+		}
+
+		function compareDatesFastest(a, b) {
+			const dateA = new Date(a.querySelector('.col:nth-child(2) h6').textContent);
+			const dateB = new Date(b.querySelector('.col:nth-child(2) h6').textContent);
+			return dateA - dateB;
+		}
+
+		function compareDatesLatest(a, b) {
+			const dateA = new Date(a.querySelector('.col:nth-child(2) h6').textContent);
+			const dateB = new Date(b.querySelector('.col:nth-child(2) h6').textContent);
+			return dateB - dateA;
+		}
+
+
+		//일정명 검색
+		function searchPlans() {
+			var searchKeyword = document.querySelector('input[type="search"]').value.toLowerCase();
+			var plans = document.querySelectorAll('.card-body .row-cols-xl-7');
+			plans.forEach(function (plan) {
+				var planName = plan.querySelector('.ms-2 h6').textContent.toLowerCase();
+				if (planName.includes(searchKeyword)) {
+					plan.style.display = 'flex';
+				} else {
+					plan.style.display = 'none';
+				}
+			});
+		}
+
+		document.querySelector('.card-body form').addEventListener('submit', function (e) {
+			e.preventDefault();
+			searchPlans();
+		});
+
+        function deletePlan() {
+			alert('일정을 삭제하시겠습니까?');
+
+			var checkboxes = document.getElementsByClassName("checkbox");
+            for (var i = checkboxes.length - 1; i >= 0; i--) {
+				if (checkboxes[i].checked) {
+					var dataRow = checkboxes[i].closest(".row-cols-xl-7");
+					dataRow.parentNode.removeChild(dataRow);
+				}
+			}
+		}
+
+        
+        function activeCheckBox() {
+			var checkboxes = document.getElementsByClassName("checkbox");
+
+			for (var i = 0; i < checkboxes.length; i++) {
+				checkboxes[i].addEventListener("change", function () {
+					var deleteButton = document.getElementById("deleteButton");
+					deleteButton.disabled = isNoCheckboxChecked();
+				});
+			}
+		}
+
+        function isNoCheckboxChecked() {
+			var checkboxes = document.getElementsByClassName("checkbox");
+			for (var i = 0; i < checkboxes.length; i++) {
+				if (checkboxes[i].checked) { return false; }
+			}
+
+			return true;
+			}
+	</script>
+
+</body>
+
+</html>

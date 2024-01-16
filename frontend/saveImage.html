@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TripMate-Download</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+
+    <style>
+        .header {
+            width: 210mm;
+            height: 40px;
+            background-color: #5142D9;
+            color: white;
+            font-size: 20px;
+        }
+
+        .plan-name {
+            width: 210mm;
+            height: 70px;
+            text-align: center;
+            font-weight: bold;
+            padding: 15px;
+        }
+
+        .plan-container {
+            font-size: 20px;
+            padding: 5px;
+            height: 35px;
+            display: flex;
+        }
+
+        .plans {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body id="body" onload="saveAsImage()">
+    <div id="container" style="height: 297mm; width: 210mm;">
+        <div id="plan-name" class="plan-name" style="font-size: 45px;">
+            여행 계획명
+        </div>
+        <div style="display: flex; margin-bottom: 10px;">
+            <div id="location" style="flex-basis: 33.33%; text-align: center;">여행할 장소: </div>
+            <div id="term" style="flex-basis: 33.33%; text-align: center;">여행 기간: </div>
+            <div id="people" style="flex-basis: 33.33%; text-align: center;">인원수: </div>
+        </div>
+        <div class="header" style="display: flex;">
+            <div style="width: 120px; padding: 5px; text-align: center;">날짜</div>
+            <div style="width: 130px; padding: 5px; text-align: center;">시간</div>
+            <div style="width: 260px; padding: 5px; text-align: center;">목적지</div>
+            <div style="width: 260px; padding: 5px; text-align: center;">내용</div>
+        </div>
+        <div id="plan1" class="plan-container">
+            <div class="plans" style="width: 120px;">2023.05.01</div>
+            <div class="plans" style="width: 130px;">17:04</div>
+            <div class="plans" style="width: 270px;">무계획이 계획이다.</div>
+            <div class="plans" style="width: 260px;">무계획이 계획이다.</div>
+        </div>
+        <div id="plan1" class="plan-container">
+            <div class="plans" style="width: 120px;">2023.07.02</div>
+            <div class="plans" style="width: 130px;">23:00</div>
+            <div class="plans" style="width: 270px;">무계획이 계획이다.</div>
+            <div class="plans" style="width: 260px;">무계획이 계획이다.</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function import_data() {
+
+            //DB에서 값 가져오기==============
+            var date = "2023.05.01";
+            var time = '17:04';
+            var location = '프랑스 파리 리츠 호텔';
+            var description = '무계획이 계획이다.';
+            //=============================
+
+            var html = '';
+            html += `
+    <div id="plan1" class="plan-container">
+      <div class="plans" style="width: 120px;">${date}</div>
+      <div class="plans" style="width: 130px;">${time}</div>
+      <div class="plans" style="width: 270px;">${location}</div>
+      <div class="plans" style="width: 260px;">${description}</div>
+    </div>
+  `;
+            $("#container").append(html);
+        }
+
+
+        function saveAsImage() {
+            var element = document.getElementById('container');
+            var options = {
+                scrollY: -window.scrollY,
+                backgroundColor: 'white',
+                scale : 0.5
+            };
+
+            html2canvas(element, options).then(function (canvas) {
+                var link = document.createElement('a');
+                link.href = canvas.toDataURL();
+                link.download = 'plan_image.png';
+                link.click();
+            });
+        }
+
+    </script>
+</body>
+
+</html>

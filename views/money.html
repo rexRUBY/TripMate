@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>TripMate - Accounting Book</title>
+
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+
+    <!-- Dark mode -->
+    <script src="/public/js/theme.js"></script>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/public/images/favicon.ico">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="/public/vendor/font-awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="/public/vendor/overlay-scrollbar/css/overlayscrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/vendor/choices/css/choices.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/vendor/glightbox/css/glightbox.css">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="/public/css/style.css">
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link href="/public/css/tripMate.css" rel="stylesheet" media="screen">
+
+    <!-- Style-->
+    <style>
+        .radio-button {
+            margin-right: 10px;
+            /* 원하는 간격으로 조정 */
+        }
+
+        .collapse-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsed .collapse-panel {
+            max-height: 1000px;
+        }
+
+        .card-body {
+            background-color: transparent;
+        }
+
+        .collapsed .card-body {
+            transition: background-color 0.3s ease;
+            background-color: white;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- **************** MAIN CONTENT START **************** -->
+    <main>
+        <!-- Header START -->
+        <header class="navbar-light header-sticky">
+            <!-- Logo Nav START -->
+            <nav class="navbar navbar-expand-xl">
+                <div class="container" style="position: relative;">
+                    <!-- Logo -->
+                    <a class="navbar-brand" href="/">
+                        <img class="light-mode-item navbar-brand-item" src="/public/images/logo.png" alt="logo">
+                        <img class="dark-mode-item navbar-brand-item" src="/public/images/logo2.png" alt="logo">
+                    </a>
+
+                    <!-- Responsive navbar toggler -->
+                    <button class="navbar-toggler ms-auto ms-sm-0 p-0 p-sm-2" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-animation">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="d-none d-sm-inline-block small">Menu</span>
+                    </button>
+
+                    <!-- Main navbar START -->
+                    <div class="navbar-collapse collapse" id="navbarCollapse" style="position: absolute; right: 100px;">
+                        <ul class="navbar-nav navbar-nav-scroll me-auto">
+                            <!-- Nav item Listing -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="listingMenu" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">Travel</a>
+                                <!-- Submenu -->
+                                <ul class="dropdown-menu" aria-labelledby="listingMenu">
+                                    <li><a class="dropdown-item" href="https://www.agoda.com/flights">항공편 예약</a></li>
+                                    <li><a class="dropdown-item" href="https://www.agoda.com">숙소 예약</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- Nav item Pages -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">Info</a>
+                                <ul class="dropdown-menu" aria-labelledby="pagesMenu">
+                                    <li> <a class="dropdown-item" href="#">개인 정보 정책</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li> <a class="dropdown-item" href="about.html">개발자 정보</a></li>
+                                    <li> <a class="dropdown-item" href="contact.html">오류 제보</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Main navbar END -->
+
+                    <!-- Profile and Notification START -->
+                    <ul class="nav flex-row align-items-center list-unstyled ms-xl-auto">
+                        <!-- Profile dropdown START -->
+                        <li class="nav-item ms-3 dropdown">
+                            <!-- Avatar -->
+                            <a class="nav-link p-0" href="#" id="profileDropdown" role="button"
+                                data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Accounts
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
+                                aria-labelledby="profileDropdown">
+                                <!-- Links -->
+                                <li><a class="dropdown-item" href="#">여행 일정 조회</a></li>
+                                <li><a class="dropdown-item" href="#">맞춤 정보</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="#"><i
+                                            class="bi bi-bookmark-check fa-fw me-2"></i>Bookmark</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"><i class="bi bi-gear fa-fw me-2"></i>Settings</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"><i class="bi bi-info-circle fa-fw me-2"></i>Help
+                                        Center</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item bg-danger-soft-hover" href="/logout"><i
+                                            class="bi bi-power fa-fw me-2"></i>Sign Out</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+
+                                <!-- Dark mode options START -->
+                                <li>
+                                    <div
+                                        class="nav-pills-primary-soft theme-icon-active d-flex justify-content-between align-items-center p-2 pb-0">
+                                        <span>Mode:</span>
+                                        <button type="button" class="btn btn-link nav-link text-primary-hover mb-0 p-0"
+                                            data-bs-theme-value="light" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            data-bs-title="Light">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-sun fa-fw mode-switch"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+                                                <use href="#"></use>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="btn btn-link nav-link text-primary-hover mb-0 p-0"
+                                            data-bs-theme-value="dark" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            data-bs-title="Dark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-moon-stars fa-fw mode-switch"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z" />
+                                                <path
+                                                    d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+                                                <use href="#"></use>
+                                            </svg>
+                                        </button>
+                                        <button type="button"
+                                            class="btn btn-link nav-link text-primary-hover mb-0 p-0 active"
+                                            data-bs-theme-value="auto" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            data-bs-title="Auto">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-circle-half fa-fw mode-switch"
+                                                viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+                                                <use href="#"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </li>
+                                <!-- Dark mode options END-->
+                            </ul>
+                        </li>
+                        <!-- Profile dropdown END -->
+                    </ul>
+                    <!-- Profile and Notification END -->
+                </div>
+            </nav>
+            <!-- Logo Nav END -->
+        </header>
+        <!-- Header END -->
+
+        <!-- ======================= Page Banner START -->
+        <section class="pb-0" style="margin-bottom: 40px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1 class="fs-2 mb-2">가계부를 작성해보세요!</h1>
+                        <p class="mb-0">장소별로 예산 사용 내역을 관리할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ======================= Page Banner END -->
+
+        <div class="container" style="margin-bottom: 30px;">
+            <!-- Exchange Card-->
+            <div class="card bg-transparent border" style="margin-bottom: 30px;">
+                <!-- Card header -->
+                <div class="card-header bg-transparent border-bottom" style="padding: 0px; color: black;">
+                    <h5 class="card-header">Exchange</h5>
+                </div>
+                <!-- Card body START -->
+                <div class="card-body p-2 p-sm-4" style="padding: 0px;">
+                    <div class="row g-4">
+                        <div class="row g-4 align-items-center" style="margin-top: 0px;">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span class="header">환전 통화</span>
+                                        <div class="row" id="container">
+                                            <div class="col-5" id="currency" style="margin-top: 5px;">
+                                                <select id="currency-one"
+                                                    class="form-select form-select-sm js-choice border-0">
+                                                    <option value="AED">AED</option>
+                                                    <option value="ARS">ARS</option>
+                                                    <option value="AUD">AUD</option>
+                                                    <option value="BGN">BGN</option>
+                                                    <option value="BRL">BRL</option>
+                                                    <option value="BSD">BSD</option>
+                                                    <option value="CAD">CAD</option>
+                                                    <option value="CHF">CHF</option>
+                                                    <option value="CLP">CLP</option>
+                                                    <option value="CNY">CNY</option>
+                                                    <option value="COP">COP</option>
+                                                    <option value="CZK">CZK</option>
+                                                    <option value="DKK">DKK</option>
+                                                    <option value="DOP">DOP</option>
+                                                    <option value="EGP">EGP</option>
+                                                    <option value="EUR">EUR</option>
+                                                    <option value="FJD">FJD</option>
+                                                    <option value="GBP">GBP</option>
+                                                    <option value="GTQ">GTQ</option>
+                                                    <option value="HKD">HKD</option>
+                                                    <option value="HRK">HRK</option>
+                                                    <option value="HUF">HUF</option>
+                                                    <option value="IDR">IDR</option>
+                                                    <option value="ILS">ILS</option>
+                                                    <option value="INR">INR</option>
+                                                    <option value="ISK">ISK</option>
+                                                    <option value="JPY">JPY</option>
+                                                    <option value="KRW" selected>KRW</option>
+                                                    <option value="KZT">KZT</option>
+                                                    <option value="MXN">MXN</option>
+                                                    <option value="MYR">MYR</option>
+                                                    <option value="NOK">NOK</option>
+                                                    <option value="NZD">NZD</option>
+                                                    <option value="PAB">PAB</option>
+                                                    <option value="PEN">PEN</option>
+                                                    <option value="PHP">PHP</option>
+                                                    <option value="PKR">PKR</option>
+                                                    <option value="PLN">PLN</option>
+                                                    <option value="PYG">PYG</option>
+                                                    <option value="RON">RON</option>
+                                                    <option value="RUB">RUB</option>
+                                                    <option value="SAR">SAR</option>
+                                                    <option value="SEK">SEK</option>
+                                                    <option value="SGD">SGD</option>
+                                                    <option value="THB">THB</option>
+                                                    <option value="TRY">TRY</option>
+                                                    <option value="TWD">TWD</option>
+                                                    <option value="UAH">UAH</option>
+                                                    <option value="USD">USD</option>
+                                                    <option value="UYU">UYU</option>
+                                                    <option value="VND">VND</option>
+                                                    <option value="ZAR">ZAR</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-5" style="margin-top: 5px;">
+                                                <select id="currency-two"
+                                                    class="form-select form-select-sm js-choice border-0">
+                                                    <option value="AED">AED</option>
+                                                    <option value="ARS">ARS</option>
+                                                    <option value="AUD">AUD</option>
+                                                    <option value="BGN">BGN</option>
+                                                    <option value="BRL">BRL</option>
+                                                    <option value="BSD">BSD</option>
+                                                    <option value="CAD">CAD</option>
+                                                    <option value="CHF">CHF</option>
+                                                    <option value="CLP">CLP</option>
+                                                    <option value="CNY">CNY</option>
+                                                    <option value="COP">COP</option>
+                                                    <option value="CZK">CZK</option>
+                                                    <option value="DKK">DKK</option>
+                                                    <option value="DOP">DOP</option>
+                                                    <option value="EGP">EGP</option>
+                                                    <option value="EUR">EUR</option>
+                                                    <option value="FJD">FJD</option>
+                                                    <option value="GBP">GBP</option>
+                                                    <option value="GTQ">GTQ</option>
+                                                    <option value="HKD">HKD</option>
+                                                    <option value="HRK">HRK</option>
+                                                    <option value="HUF">HUF</option>
+                                                    <option value="IDR">IDR</option>
+                                                    <option value="ILS">ILS</option>
+                                                    <option value="INR">INR</option>
+                                                    <option value="ISK">ISK</option>
+                                                    <option value="JPY">JPY</option>
+                                                    <option value="KRW">KRW</option>
+                                                    <option value="KZT">KZT</option>
+                                                    <option value="MXN">MXN</option>
+                                                    <option value="MYR">MYR</option>
+                                                    <option value="NOK">NOK</option>
+                                                    <option value="NZD">NZD</option>
+                                                    <option value="PAB">PAB</option>
+                                                    <option value="PEN">PEN</option>
+                                                    <option value="PHP">PHP</option>
+                                                    <option value="PKR">PKR</option>
+                                                    <option value="PLN">PLN</option>
+                                                    <option value="PYG">PYG</option>
+                                                    <option value="RON">RON</option>
+                                                    <option value="RUB">RUB</option>
+                                                    <option value="SAR">SAR</option>
+                                                    <option value="SEK">SEK</option>
+                                                    <option value="SGD">SGD</option>
+                                                    <option value="THB">THB</option>
+                                                    <option value="TRY">TRY</option>
+                                                    <option value="TWD">TWD</option>
+                                                    <option value="UAH">UAH</option>
+                                                    <option value="USD" selected>USD</option>
+                                                    <option value="UYU">UYU</option>
+                                                    <option value="VND">VND</option>
+                                                    <option value="ZAR">ZAR</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="header">환전할 금액</span>
+                                        <input class="form-control" type="number" id="amount-one" placeholder="0"
+                                            value="1" style="margin-top: 5px;" />
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="header">환전된 금액</span>
+                                        <input class="form-control" type="number" id="amount-two" placeholder="0"
+                                            style="margin-top: 5px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Swap -->
+                        <div style="margin-top: 30px;">
+                            <span class="rate" id="rate" style="margin-left: 10px;"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card body END -->
+            </div>
+            <!-- Exchange END -->
+
+
+            <div class="row" style="padding: 15px;">
+                <!-- Deposit & Withdrawal-->
+                <div class="card bg-transparent border"
+                    style="width: 470px; height: 500px; margin-right: 15px; padding-right: 0px;padding-left: 0px;">
+                    <!-- Card header -->
+                    <div class="card-header bg-transparent border-bottom" style="padding: 0px; color: black;">
+                        <h5 class="card-header">Deposit & Withdrawal</h5>
+                    </div>
+
+                    <!-- Card body START -->
+                    <div class="card-body p-2 p-sm-4" style="padding: 0px; ">
+                        <div class="row g-4" style="margin: 0px;">
+                            <div class="form-check" style="margin-top: 0px; padding-top: 0px;">
+                                <input class="form-check-input" type="radio" id="plus" name="radioType" checked>
+                                <label class="form-check-label" for="plus">입금</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="minus" name="radioType">
+                                <label class="form-check-label" for="minus">출금</label>
+                            </div>
+                            <div style="margin-top: 20px; padding-left: 0px; padding-right: 0px;">
+                                <span class="header" style="margin-bottom: 5px;">금액</span>
+                                <input class="form-control" type="number" id="money" style="margin-top: 5px;" />
+                            </div>
+                            <div style="padding: 0px; margin-top: 20px;">
+                                <label class="form-label">메모</label>
+                                <textarea class="form-control" rows="3" spellcheck="false" id="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="btn btn-primary mb-5" role="button"
+                            style="height: 45px; width: 45px; align-items: center; margin-top: 20px; float: right;"
+                            onclick="addList()">+</div>
+                    </div>
+                    <!-- Card body END -->
+                </div>
+
+                <!--Output List -->
+                <div class="card bg-transparent border col-7" style="padding-right: 0px;padding-left: 0px;">
+                    <!-- Card header -->
+                    <div class="card-header bg-transparent border-bottom" style="padding: 0px; color: black;">
+                        <h5 class="card-header">Output List</h5>
+                    </div>
+
+                    <!-- Card body START -->
+                    <div class="card-body p-2 p-sm-4" style="padding: 0px;  height: 435px; overflow: auto;" id="output">
+                        <div class="row g-4" style="margin: 0px; margin-bottom: 15px;">
+                            <!-- header -->
+                            <div style="display: flex; justify-content: center;">
+                                <h6 class="mb-0" style="flex-basis: 33%; text-align: center;">금액</h6>
+                                <h6 class="mb-0" style="flex-basis: 33%; text-align: center;">잔액</h6>
+                                <h6 id="memo" class="mb-0" style="flex-basis: 33%; text-align: center;">메모</h6>
+                            </div>
+                            <!-- Contents -->
+
+                        </div>
+                    </div>
+                    <!-- Card body END -->
+                    <div>
+                        <button class="btn btn-primary" style="float: right; margin: 20px 20px 20px 20px;"
+                            onclick="removeList()">삭제</button>
+                    </div>
+                </div>
+                <div style="padding: 0px; margin: 0px; margin-top: 10px;">
+                    <button id="go_plan_list" class="btn btn-secondary prev-btn mb-0">Plan List</button>
+                    <button id="saveBtn" class="btn btn-primary" style="float: right;">저장하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- Container END -->
+    </main>
+    <!-- **************** MAIN CONTENT END **************** -->
+
+
+    <!-- ======================= Footer START -->
+    <footer class="bg-dark p-3">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Logo Widget -->
+                <div class="col-md-4">
+                    <div class="text-center text-md-start mb-3 mb-md-0">
+                        <a href="/"> <img class="h-30px" src="/public/images/logo2.png" alt="logo"> </a>
+                    </div>
+                </div>
+                <!-- Copyright -->
+                <div class="col-md-4">
+                    <div class="text-muted text-primary-hover">Copyrights ©2023 MJC Isass
+                        <a href="https://github.com/ssongK/TripMate" class="text-muted">Phoneix Team</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ======================= Footer END -->
+    <!-- Bootstrap JS -->
+    <script src="/public/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Vendor -->
+    <script src="/public/vendor/overlay-scrollbar/js/overlayscrollbars.min.js"></script>
+    <script src="/public/vendor/choices/js/choices.min.js"></script>
+    <script src="/public/vendor/glightbox/js/glightbox.js"></script>
+
+    <!-- ThemeFunctions -->
+    <script src="/public/js/functions.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- Java Script -->
+    <script src="/public/js/money.js"></script>
+
+</body>
+
+</html>

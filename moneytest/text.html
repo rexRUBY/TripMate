@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>가계부 만들기</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <div>
+      <form class="center">
+        <div class="text_center">
+          <div class="input"><span class="header">환전 통화</span></div>
+          <div class="input"><span class="header">환전할 금액</span></div>
+          <div class="input"><span class="header">환전 금액</span></div>
+        </div>
+        <div class="container">
+          <div class="currency">
+            <select id="currency-one">
+              <option value="AED">AED</option>
+              <option value="ARS">ARS</option>
+              <option value="AUD">AUD</option>
+              <option value="BGN">BGN</option>
+              <option value="BRL">BRL</option>
+              <option value="BSD">BSD</option>
+              <option value="CAD">CAD</option>
+              <option value="CHF">CHF</option>
+              <option value="CLP">CLP</option>
+              <option value="CNY">CNY</option>
+              <option value="COP">COP</option>
+              <option value="CZK">CZK</option>
+              <option value="DKK">DKK</option>
+              <option value="DOP">DOP</option>
+              <option value="EGP">EGP</option>
+              <option value="EUR">EUR</option>
+              <option value="FJD">FJD</option>
+              <option value="GBP">GBP</option>
+              <option value="GTQ">GTQ</option>
+              <option value="HKD">HKD</option>
+              <option value="HRK">HRK</option>
+              <option value="HUF">HUF</option>
+              <option value="IDR">IDR</option>
+              <option value="ILS">ILS</option>
+              <option value="INR">INR</option>
+              <option value="ISK">ISK</option>
+              <option value="JPY">JPY</option>
+              <option value="KRW"selected>KRW</option>
+              <option value="KZT">KZT</option>
+              <option value="MXN">MXN</option>
+              <option value="MYR">MYR</option>
+              <option value="NOK">NOK</option>
+              <option value="NZD">NZD</option>
+              <option value="PAB">PAB</option>
+              <option value="PEN">PEN</option>
+              <option value="PHP">PHP</option>
+              <option value="PKR">PKR</option>
+              <option value="PLN">PLN</option>
+              <option value="PYG">PYG</option>
+              <option value="RON">RON</option>
+              <option value="RUB">RUB</option>
+              <option value="SAR">SAR</option>
+              <option value="SEK">SEK</option>
+              <option value="SGD">SGD</option>
+              <option value="THB">THB</option>
+              <option value="TRY">TRY</option>
+              <option value="TWD">TWD</option>
+              <option value="UAH">UAH</option>
+              <option value="USD">USD</option>
+              <option value="UYU">UYU</option>
+              <option value="VND">VND</option>
+              <option value="ZAR">ZAR</option>
+            </select>
+            <select id="currency-two">
+              <option value="AED">AED</option>
+              <option value="ARS">ARS</option>
+              <option value="AUD">AUD</option>
+              <option value="BGN">BGN</option>
+              <option value="BRL">BRL</option>
+              <option value="BSD">BSD</option>
+              <option value="CAD">CAD</option>
+              <option value="CHF">CHF</option>
+              <option value="CLP">CLP</option>
+              <option value="CNY">CNY</option>
+              <option value="COP">COP</option>
+              <option value="CZK">CZK</option>
+              <option value="DKK">DKK</option>
+              <option value="DOP">DOP</option>
+              <option value="EGP">EGP</option>
+              <option value="EUR">EUR</option>
+              <option value="FJD">FJD</option>
+              <option value="GBP">GBP</option>
+              <option value="GTQ">GTQ</option>
+              <option value="HKD">HKD</option>
+              <option value="HRK">HRK</option>
+              <option value="HUF">HUF</option>
+              <option value="IDR">IDR</option>
+              <option value="ILS">ILS</option>
+              <option value="INR">INR</option>
+              <option value="ISK">ISK</option>
+              <option value="JPY">JPY</option>
+              <option value="KRW">KRW</option>
+              <option value="KZT">KZT</option>
+              <option value="MXN">MXN</option>
+              <option value="MYR">MYR</option>
+              <option value="NOK">NOK</option>
+              <option value="NZD">NZD</option>
+              <option value="PAB">PAB</option>
+              <option value="PEN">PEN</option>
+              <option value="PHP">PHP</option>
+              <option value="PKR">PKR</option>
+              <option value="PLN">PLN</option>
+              <option value="PYG">PYG</option>
+              <option value="RON">RON</option>
+              <option value="RUB">RUB</option>
+              <option value="SAR">SAR</option>
+              <option value="SEK">SEK</option>
+              <option value="SGD">SGD</option>
+              <option value="THB">THB</option>
+              <option value="TRY">TRY</option>
+              <option value="TWD">TWD</option>
+              <option value="UAH">UAH</option>
+              <option value="USD"selected>USD</option>
+              <option value="UYU">UYU</option>
+              <option value="VND">VND</option>
+              <option value="ZAR">ZAR</option>
+            </select>
+            <input type="number" id="amount-one" placeholder="0" value="1" />
+            <input type="number" id="amount-two" placeholder="0" />
+          </div>
+          <div class="swap-rate-container">
+            <div class="btn" id="swap">Swap</div>
+            <div class="rate" id="rate"></div>
+          </div>
+        </br>
+        <div class="text_center">
+          <div class="input"><span class="header">입금/출금</span></div>
+          <div class="input"><span class="header">얼마</span></div>
+          <div class="input"><span class="header">메모</span></div>
+        </div>
+        <br />
+        <div class="text_center">
+          <div class="center input">
+            <div class="text_center input">
+              <input type="radio" name="type" id="plus" checked /><label
+                >입금</label
+              >
+            </div>
+            <div class="text_center input">
+              <input type="radio" name="type" id="minus" /><label>출금</label>
+            </div>
+            <div class="text_center input">
+            </div>
+          </div>
+          <div class="input">
+            <input type="text" class="input" id="money" />
+          </div>
+          <div class="input">
+            <input type="text" class="input" id="description" />
+          </div>
+        </div>
+        <div style="text-align: center">
+          <button onclick="addList();">추가</button>
+        </div>
+      </form>
+    </div>
+    <div>
+      <form class="center" id="list">
+        <div class="text_center">
+          <div>
+            <div class="input_list"><span class="header">입금/출금</span></div>
+            <div class="input_list"><span class="header">얼마</span></div>
+            <div class="input_list"><span class="header">메모</span></div>
+            <div class="input_list"><span class="header">잔액</span></div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="./test.js"></script>
+  </body>
+</html>

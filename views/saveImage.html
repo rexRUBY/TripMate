@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TripMate-Download</title>
+    <style>
+        .header {
+            width: 210mm;
+            height: 40px;
+            background-color: #5142D9;
+            color: white;
+            font-size: 20px;
+        }
+
+        .plan-name {
+            width: 210mm;
+            height: 70px;
+            text-align: center;
+            font-weight: bold;
+            padding: 15px;
+        }
+
+        .plan-container {
+            font-size: 20px;
+            padding: 5px;
+            height: 35px;
+            display: flex;
+        }
+
+        .plans {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" style="height: 297mm; width: 210mm;">
+        <div id="plan_name" class="plan-name" style="font-size: 45px;">계획 이름</div>
+        <div style="display: flex; margin-bottom: 10px;">
+            <div id="plan_location" style="flex-basis: 33.33%; text-align: center;">여행할 장소: </div>
+            <div id="plan_date" style="flex-basis: 33.33%; text-align: center;">여행 기간: </div>
+            <div id="plan_people" style="flex-basis: 33.33%; text-align: center;">인원수: </div>
+        </div>
+        <div class="header" style="display: flex;">
+            <div style="width: 160px; padding: 5px; text-align: center;">날짜</div>
+            <div style="width: 300px; padding: 5px; text-align: center;">목적지</div>
+            <div style="width: 320px; padding: 5px; text-align: center;">내용</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+    <script src="/public/js/save_image.js"></script>
+</body>
+
+</html>
